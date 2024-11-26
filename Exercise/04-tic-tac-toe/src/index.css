@@ -13,6 +13,8 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
+
+  --border-tic-tac-toe: 7px solid #fff
 }
 
 body {
@@ -32,54 +34,66 @@ body {
 
 .board {
   width: fit-content;
-  margin: 40px auto;
+  margin: 30px auto;
   text-align: center;
 }
 
 .board h1 {
   color: #eee;
-  margin-bottom: 16px;
+  margin-bottom: 30px;
+}
+
+.board img{
+  width: 30px;
+  height: 30px;
+  margin-left: 10px;
 }
 
 .board button {
-  padding: 8px 12px;
+  padding: 14px 10px;
   margin: 25px;
   background: transparent;
-  border: 2px solid #eee;
+  border: 2px solid #ffffff;
   color: #eee;
-  width: 100px;
-  border-radius: 5px;
-  transition: 0.2s;
+  width: 200px;
+  border-radius: 10px;
+  transition: .2s;
+  font-size: larger;
   font-weight: bold;
   cursor: pointer;
 }
 
 .board button:hover {
-  background: #eee;
-  color: #222;
+  background: #09f;
+  color: #fff;
 }
 
 .board .game {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
 }
+
 
 .turn {
   display: flex;
+  place-items: center;
+  align-items: center;
   justify-content: center;
   margin: 15px auto;
   width: fit-content;
   position: relative;
-  border-radius: 10px;
+  border-radius: 30px;
+  gap: 6px
 }
 
 .turn .square,
 .winner .square {
   width: 70px;
   height: 70px;
+  align-items: center;
   pointer-events: none;
   border-color: transparent;
+  border-radius: 10px;
 }
 
 .square.is-selected {
@@ -95,15 +109,15 @@ body {
   left: 0;
   display: grid;
   place-items: center;
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: rgba(0, 0, 0, 0.726);
 }
 
 .winner .text {
   background: #111;
   height: 300px;
-  width: 320px;
+  width: 310px;
   border: 2px solid #eee;
-  border-radius: 10px;
+  border-radius: 15px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -123,10 +137,25 @@ body {
 .square {
   width: 100px;
   height: 100px;
-  border: 2px solid #eee;
-  border-radius: 5px;
   display: grid;
   place-items: center;
   cursor: pointer;
   font-size: 48px;
+}
+
+.game .square:nth-child(4),
+.game .square:nth-child(5),
+.game .square:nth-child(7),
+.game .square:nth-child(8){
+  border-top: var(--border-tic-tac-toe);
+  border-right: var(--border-tic-tac-toe);
+}
+
+.game .square:nth-child(1),
+.game .square:nth-child(2){
+  border-right: var(--border-tic-tac-toe);
+}
+.game .square:nth-child(6),
+.game .square:nth-child(9){
+  border-top: var(--border-tic-tac-toe);
 }
