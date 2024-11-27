@@ -1,12 +1,12 @@
 import { useState } from 'react'
 import confeti from 'canvas-confetti'
 import './App.css'
-import { TURNS, WINNER_COMBOS } from './logic/turnsLogic'
+import { TURNS, checkWinner, checkGameEnd } from './logic/constants'
 import { Square } from './components/Square'
+import { WinnerModel } from './components/WinnerModel'
 
 // DIBUJAR LOS CUADROS
   <Square />
-
 
 function App() {
 
@@ -15,35 +15,13 @@ function App() {
   const [turn, setTurn] = useState(TURNS.X) // ESTADO DE LOS TURNOS
 
   const [winner, setWinner] = useState(null) // ESTADO PARA DEFINIR GANADOR
+ 
 
-  // REVISANDO SI HAY GANADOR CON LAS COMBINACIONES
-  const checkWinner = (boardCheck) => {
-    for(const combo of WINNER_COMBOS){
-      const [a, b, c] = combo
-      if (
-        boardCheck[a] && boardCheck[a] === boardCheck[b] && boardCheck[a] === boardCheck[c]
-      ) {
-        return boardCheck[a]
-      }
-    }
-    return null
-  }
-  // SI NO QUEDAN ESPACIOS VACIOS EN EL TABLERO SE DECLARA UN EMPATE
-  const checkGameEnd = (newBoard) => {
-    for (const square of newBoard) {
-      if (square === null) {
-        return false
-      }
-    }
-    return true
-  }
-
-  //EMPEZAR DE NUEVO
+  //EMPEZAR DE NUEVO -> resetear todos los valores del estado a su valor inicial
   const resetGame = () => {
     setBoard(Array(9).fill(null))
     setTurn(TURNS.X)
     setWinner(null)
-
   }
 
   // ACTUALIZAR EL TABLERO
@@ -64,7 +42,7 @@ function App() {
     const newWinner = checkWinner(newBoard)
     if (newWinner) {
       setWinner(newWinner)
-      for (let index = 0; index < 3; index++) {
+      for (let index = 0; index <= 3; index++) {
         confeti()
      }
     }
@@ -103,27 +81,8 @@ function App() {
         </Square>
       </section>
       <button onClick={resetGame}>Restart</button>
-      {
-        winner !== null && (
-          <section className='winner'>
-            <div className='text'>
-              <h2>
-                {
-                  winner === false
-                  ? 'Draw'
-                  : 'Win!'
-                }
-              </h2>
-              <header className='win'>
-                {winner && <Square>{winner}</Square>}
-              </header>
-              <footer>
-                <button onClick={resetGame}>Play Again</button>
-              </footer>
-            </div>
-          </section>
-        )
-      }
+      {/* Que se muestra en la pantalla si ganas o empatas */}
+     <WinnerModel resetGame={resetGame} winner={winner} />
     </main>
     </>
   )
